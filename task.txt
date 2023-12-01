@@ -1,0 +1,48 @@
+Challenge React pour Débutants : Création d'une Liste de Tâches
+
+Objectif :
+    Créer une application simple de liste de tâches en utilisant React.
+
+Instructions :
+
+1. Mise en place du projet :
+
+    - Utilisez Create React App pour créer un nouveau projet.                                                            ok
+    - Créez un composant principal appelé App.                                                                           ok
+
+2. Création de la liste de tâches :
+
+    - Créez un composant TaskList qui représente la liste de tâches.                                                     ok
+    - Initialisez une liste de tâches dans l'état local du composant (utilisez le useState hook).                        ok
+    - Affichez la liste des tâches à l'écran.                                                                            ok
+
+3. Ajout de nouvelles tâches :
+
+    - Créez un composant AddTask qui permet à l'utilisateur d'ajouter de nouvelles tâches.                               ok
+    - Utilisez un formulaire simple avec un champ de saisie et un bouton "Ajouter".                                      ok
+    - Lorsque l'utilisateur soumet le formulaire, la nouvelle tâche doit être ajoutée à la liste.                        ok
+
+4. Marquage des tâches comme complétées :
+
+    - Ajoutez la possibilité de marquer une tâche comme complétée.                                                       ok
+    - Affichez visuellement les tâches complétées différemment (par exemple, en les rayant).                             ok
+
+5. Suppression de tâches :
+
+    - Ajoutez un bouton à chaque tâche pour permettre à l'utilisateur de la supprimer de la liste.                       ok
+
+6. Styles :
+
+    - Ajoutez un peu de style à votre application pour la rendre attrayante.                                             ok
+    - Vous pouvez utiliser des bibliothèques de styles comme Bootstrap ou styled-components.
+
+7. Bonus (facultatif) :
+
+    - Ajoutez la possibilité de modifier le texte d'une tâche.                                                           
+    - Implémentez la fonctionnalité de filtre pour afficher uniquement les tâches complétées ou non complétées.          ok
+
+Ressources utiles :
+    - Documentation React : https://reactjs.org/docs/getting-started.html
+    - Documentation Create React App : https://create-react-app.dev/docs/getting-started/
+
+N'oubliez pas de décomposer le problème en petites étapes et de tester fréquemment votre application. Bon codage !
