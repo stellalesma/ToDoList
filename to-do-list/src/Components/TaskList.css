@@ -1,0 +1,45 @@
+li {
+    display: flex;
+    /* flex-direction: row; */
+    align-items: center;
+    margin: 15px;
+    padding: 10px 10px;
+    height: auto;
+    background-color: #555555;
+    border-bottom: 2px solid #000;
+}
+
+.title {
+    color: #F55385;
+    font-size: xx-large;
+    font-weight: bold;
+}
+
+.description {
+    color: #CCCCCC;
+    font-size: medium;
+}
+
+.editDescrip {
+    flex-direction: row;
+    margin: 10px 0;
+}
+
+.edit {
+    margin: 0 20px;
+}
+
+.icon {
+    margin-left: auto;
+    padding: auto;
+    flex-direction: row;
+}
+
+.delete {
+    margin-right: 10px;
+}
+
+ul {
+    padding: 20px 35px;
+    list-style-type: none;
+}

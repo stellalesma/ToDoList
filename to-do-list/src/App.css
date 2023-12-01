@@ -1,0 +1,42 @@
+body {
+  display: flex;
+  justify-content: center;
+  background-color: black;
+}
+
+p.app {
+  color: white;
+  font-size: 50px;
+  font-weight: bold;
+  text-align: center;
+}
+
+.App {
+  width: 1000px;
+  padding: 20px 20px;
+  margin: 0 auto;
+  margin-bottom: 100px;
+  box-sizing: border-box;
+  background-color: #333333;
+}
+
+.DoneCompleted {
+  display: flex;
+  flex-direction: row;
+  margin-top: 20px;
+  margin-left: 20px;
+}
+
+button.default {
+  width: 85px;
+  height: 50px;
+  color: white;
+  background-color: #999999;
+}
+
+button.clicked {
+  width: 85px;
+  height: 50px;
+  color: white;
+  background-color: #F55385;
+}
