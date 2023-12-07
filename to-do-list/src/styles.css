@@ -1,0 +1,291 @@
+/*App.css*/
+
+body {
+    display: flex;
+    justify-content: center;
+    background-color: black;
+}
+
+p {
+    margin: 0px;
+}
+
+p.app {
+    color: white;
+    font-size: 50px;
+    font-weight: bold;
+    text-align: center;
+}
+
+.App {
+    width: 1000px;
+    padding: 10px 20px;
+    margin: 0 auto;
+    margin-bottom: 100px;
+    box-sizing: border-box;
+    background-color: #333333;
+}
+
+.DoneCompleted {
+    display: flex;
+    flex-direction: row;
+    margin-top: 20px;
+    margin-left: 20px;
+}
+
+button.app {
+    width: 85px;
+    height: 50px;
+    color: white;
+}
+
+
+/*AddTask.css*/
+
+form.addTask {
+    margin: 0 20px;
+    border-bottom: 1px solid dimgrey;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding-bottom: 20px;
+}
+
+div.addTask {
+    display: flex;
+    flex-direction: column;
+    margin-right: 40px;
+}
+
+label.addTask {
+    color: whitesmoke;
+    font-size: large;
+    margin-top: 20px;
+    margin-left: 5px;
+    margin-bottom: 10px;
+    font-weight: bold;
+}
+
+input.addTask {
+    width: 600px;
+    height: 30px;
+    padding-left: 5px;
+    font-size: small;
+}
+
+.defaultText {
+    color: black;
+}
+
+.defaultText::placeholder {
+    color: gray;
+}
+
+textarea.addTask {
+    width: 600px;
+    height: 120px;
+    padding: 8px 0;
+    padding-left: 5px;
+    font-size: small;
+    resize: none;
+    font-family: 'Segoe UI', sans-serif;
+}
+
+button.addTask {
+    display: flex;
+    width: 70px;
+    height: 50px;
+    margin-left: auto;
+    color: white;
+    font-size: larger;
+    font-weight: bold;
+    align-items: center;
+    justify-content: center;
+}
+
+button.enable {
+    background-color: #F55385;
+}
+
+button.disable {
+    background-color: #999999;
+}
+
+.warning {
+    color: red;
+    font-size: x-small;
+    font-weight: normal;
+    text-align: left;
+    margin-bottom: 0;
+}
+
+
+/*TaskList.css*/
+
+li {
+    display: flex;
+    align-items: center;
+    margin: 15px;
+    padding: 10px 10px;
+    height: auto;
+    background-color: #555555;
+    border-bottom: 2px solid #000;
+}
+
+.textToDo {
+    width: 700px;
+}
+
+.title {
+    word-wrap: break-word;
+    color: #F55385;
+    font-size: xx-large;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.description {
+    word-wrap: break-word;
+    color: #CCCCCC;
+    font-size: medium;
+}
+
+.iconTask {
+    display: flex;
+    margin-left: auto;
+    padding: auto;
+    flex-direction: row;
+}
+
+.icon:hover {
+    color: red !important;
+}
+
+ul {
+    padding: 20px 35px;
+    list-style-type: none;
+}
+
+
+/*CompletedList.css*/
+
+.textCompleted {
+    width: 800px;
+}
+
+.date {
+    margin-top: 10px;
+    color: #CCCCCC;
+    font-size: small;
+    font-style: italic;
+}
+
+.iconCompleted {
+    display: flex;
+    margin-left: auto;
+    margin-right: 0;
+    padding: auto;
+    flex-direction: row;
+}
+
+
+/*EditWindow.css*/
+
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    display: block;
+}
+
+.modal {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #555555;
+    padding: 20px;
+    border: 1px solid dimgrey;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+}
+
+p.editWindow {
+    margin: 0;
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+    color: #F55385;
+    font-size: x-large;
+    font-weight: bold;
+    text-align: center;
+    border-bottom: 1px solid grey;
+}
+
+section.editWindow {
+    display: flex;
+    flex-direction: column;
+}
+
+div.editWindow {
+    display: flex;
+    flex-direction: row;
+    margin: 10px 0;
+}
+
+div.editButtons {
+    display: flex;
+    justify-content: center;
+    margin-top: 25px;
+    margin-bottom: 0;
+}
+
+label.editWindow {
+    display: flex;
+    align-items: center;
+    color: whitesmoke;
+    font-size: large;
+    margin-top: 0;
+    margin-right: 20px;
+    font-weight: bold;
+}
+
+input.editWindow {
+    width: 400px;
+    height: 30px;
+    padding-left: 5px;
+    font-size: small;
+    margin-left: auto;
+}
+
+textarea.editWindow {
+    width: 400px;
+    height: 70px;
+    padding: 8px 0;
+    padding-left: 5px;
+    font-size: small;
+    margin-left: auto;
+    resize: none;
+    font-family: 'Segoe UI', sans-serif;
+}
+
+button.editWindow {
+    display: flex;
+    width: 80px;
+    height: 40px;
+    color: white;
+    margin: 0 50px;
+    font-size: larger;
+    font-weight: bold;
+    align-items: center;
+    justify-content: center;
+    background-color: #F55385;
+}
+
+.editWarning {
+    margin-top: 0;
+    margin-left: 120px;
+    margin-bottom: 15px;
+}

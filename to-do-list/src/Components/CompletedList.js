@@ -1,4 +1,4 @@
-import './CompletedList.css'
+import './../styles.css'
 
 import { MdDeleteOutline } from 'react-icons/md';
 
@@ -7,12 +7,12 @@ function CompletedList({ completedList, onDelete }) {
     const displayTask = completedList.map((task, index) =>
         <li key={index}>
             <div>
-                <span className='title'>{task[0]}</span>
-                <span className='description'>{task[1]}</span>
-                <span className='date_time'>Completed on : {task[2]}</span>
+                <p className='textCompleted title' style={{width: '800px'}}>{task.title}</p>
+                <p className='textCompleted description'>{task.description}</p>
+                <p className='date'>Completed on : {task.date}</p>
             </div>
-            <div className='icon'>
-                <MdDeleteOutline title='Delete' onClick={() => onDelete(index)} style={{color: 'white', fontSize: '2em'}}/>
+            <div className='iconCompleted'>
+                <MdDeleteOutline title='Delete' onClick={() => onDelete(index)} className='icon' style={{color: 'white', fontSize: '2em'}}/>
             </div>
         </li>
     );

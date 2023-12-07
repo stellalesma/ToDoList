@@ -1,6 +1,6 @@
-import './TaskList.css'
+import './../styles.css'
 
-import { BiEditAlt } from "react-icons/bi";
+import { RiEdit2Line } from "react-icons/ri";
 import { MdDeleteOutline, MdDownloadDone } from 'react-icons/md';
 
 function TaskList({ taskList, onEdit, onDelete, onDone }) {
@@ -8,15 +8,13 @@ function TaskList({ taskList, onEdit, onDelete, onDone }) {
     const displayTask = taskList.map((task, index) =>
         <li key={index}>
             <div>
-                <span className='title'>{task[0]}</span>
-                <div className='editDescrip'>
-                    <span className='description'>{task[1]}</span>
-                    <BiEditAlt className='edit' title='Edit' onClick={() => onEdit(index)} style={{color: 'gray', fontSize: '1.2em'}}/>
-                </div>
+                <p className='textToDo title'>{task.title}</p>
+                <p className='textToDo description'>{task.description}</p>
             </div>
-            <div className='icon'>
-                <MdDeleteOutline className='delete' title='Delete' onClick={() => onDelete(index)} style={{color: 'white', fontSize: '2em'}}/>
-                <MdDownloadDone title='Done' onClick={() => onDone(index)} style={{color: '#F55385', fontSize: '2em'}}/>
+            <div className='iconTask'>
+                <RiEdit2Line title='Edit' onClick={() => onEdit(index)} className='icon' style={{color: '#F55385', fontSize: '2em', marginRight: '10'}}/>
+                <MdDownloadDone title='Done' onClick={() => onDone(index)} className='icon' style={{color: '#F55385', fontSize: '2em', marginRight: '10'}}/>
+                <MdDeleteOutline title='Delete' onClick={() => onDelete(index)} className='icon' style={{color: 'white', fontSize: '2em'}}/>
             </div>
         </li>
     );

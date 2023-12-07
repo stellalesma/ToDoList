@@ -1,13 +1,10 @@
-import './EditWindow.css'
+import './../styles.css'
 
 import { useState } from 'react'
 import { MdOutlineCancel } from "react-icons/md";
 
 function EditWindow({ currentTitle, currentDescription, onSaveEdit, onCancelEdit }) {
-    const [isTitle, setIsTitle] = useState(false)
     const [newTitle, setNewTitle] = useState(currentTitle)
-    const [hasSubmitted, setHasSubmitted] = useState(false)
-    const [isDescription, setIsDescription] = useState(false)
     const [newDescription, setNewDescription] = useState(currentDescription)
 
     const handleTitle = (e) => {
@@ -20,18 +17,9 @@ function EditWindow({ currentTitle, currentDescription, onSaveEdit, onCancelEdit
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        setHasSubmitted(true);
 
-        if (newTitle) setIsTitle(true);
-        else setIsTitle(false);
-
-        if (newDescription) setIsDescription(true);
-        else setIsDescription(false);
-
-        if (newTitle && newDescription) {
-            setIsTitle(true);
-            setIsDescription(true);
-            onSaveEdit([newTitle, newDescription]);
+        if (newTitle.trim() && newDescription.trim()) {
+            onSaveEdit({title: newTitle.trim(), description: newDescription.trim()});
             setNewTitle('');
             setNewDescription('');
         }
@@ -41,7 +29,7 @@ function EditWindow({ currentTitle, currentDescription, onSaveEdit, onCancelEdit
         <div>
             <div className="overlay" />
 
-            <MdOutlineCancel title='Cancel' onClick={onCancelEdit} style={{color: 'gray', fontSize: '1.2em', position: 'absolute', top: '10px', right: '10px'}}/>
+            <MdOutlineCancel title='Cancel' onClick={onCancelEdit} className='icon' style={{color: 'gray', fontSize: '1.2em', position: 'absolute', top: '10px', right: '10px'}}/>
 
             <form className='modal' onSubmit={handleSubmit}>
 
@@ -49,15 +37,15 @@ function EditWindow({ currentTitle, currentDescription, onSaveEdit, onCancelEdit
                 <section className='editWindow'>
                     <div className='editWindow'>
                         <label className='editWindow' htmlFor="title">Title :</label>
-                        <input className='defaultText' type="text" id="title" name="title" placeholder="Please, set a title for your Task..." value={newTitle} onChange={handleTitle}></input>
+                        <input className='editWindow defaultText' type="text" id="title" name="title" placeholder="Please, set a title for your Task..." value={newTitle} onChange={handleTitle}></input>
                     </div>
-                    { (hasSubmitted && !isTitle) ? <p className='warning editWarning'>* The title is empty. Please, fill it out before adding...</p> : null }
+                    { (!newTitle.trim()) ? <p className='warning editWarning'>* The title is empty. Please, fill it out before adding...</p> : null }
 
                     <div className='editWindow'>
                         <label className='editWindow' htmlFor="description">Description :</label>
-                        <input className='defaultText' type="text" id="description" name="description" placeholder="Please, set a description for your Description..." value={newDescription} onChange={handleDescription}></input>
+                        <textarea className='editWindow defaultText' type="text" id="description" name="description" placeholder="Please, set a description for your Description..." value={newDescription} onChange={handleDescription}></textarea>
                     </div>
-                    { (hasSubmitted && isTitle && !isDescription) ? <p className='warning editWarning'>* The description is empty. Please, fill it out before adding...</p> : null }
+                    { (newTitle.trim() && !newDescription.trim()) ? <p className='warning editWarning'>* The description is empty. Please, fill it out before adding...</p> : null }
 
                     <div className='editWindow editButtons'>
                         <button className='editWindow' onClick={onCancelEdit}>Cancel</button>
