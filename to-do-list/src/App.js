@@ -65,34 +65,12 @@ function App() {
       return customFetch(url, options)
     }
 
-	// useEffect(() => {
-	// 	const taskToDoStored = localStorage.getItem('myToDoList');
-	// 	const taskDoneStored = localStorage.getItem('myDoneList');
-	  
-	// 	if (taskToDoStored) {
-	// 	  try {
-	// 		setTaskList(JSON.parse(taskToDoStored));
-	// 	  } catch (error) {
-	// 		console.error("Erreur lors de l'analyse JSON de myToDoList :", error);
-	// 	  }
-	// 	}
-	  
-	// 	if (taskDoneStored) {
-	// 	  try {
-	// 		setCompletedList(JSON.parse(taskDoneStored));
-	// 	  } catch (error) {
-	// 		console.error("Erreur lors de l'analyse JSON de myDoneList :", error);
-	// 	  }
-	// 	}
-	//   }, []);
-
 	const handleAddTask = (newTask) => {
 		setTaskList(() => {
 			const updatedList = [
 				{title: newTask.title, description: newTask.description},
 				...taskList
 			];
-			// localStorage.setItem('myToDoList', JSON.stringify(updatedList));
 			const options = {
 				body: newTask
 			}
@@ -120,7 +98,6 @@ function App() {
 		setTaskList(tmpList);
 		setTaskToEdit([]);
 		setModalVisible(false);
-		// localStorage.setItem('myToDoList', JSON.stringify(tmpList));
 		const options = {
 			body: editedTask
 		}
@@ -138,7 +115,6 @@ function App() {
 		const tmpList = taskList.slice();
 		const deletedTask = tmpList.splice(id, 1);
 		setTaskList(tmpList);
-		// localStorage.setItem('myToDoList', JSON.stringify(tmpList));
 		const options = {
 			body: deletedTask[0]
 		}
@@ -149,7 +125,6 @@ function App() {
 		const tmpList = completedList.slice();
 		const deletedTask = tmpList.splice(id, 1);
 		setCompletedList(tmpList);
-		// localStorage.setItem('myDoneList', JSON.stringify(tmpList));
 		const options = {
 			body: deletedTask[0]
 		}
@@ -170,7 +145,7 @@ function App() {
 
 		const currentDate = new Date();
 		const tmpList = taskList.slice()
-		const tmpTask = tmpList.splice(id, 1)[0] // return an array and each element in tmpList is also an array
+		const tmpTask = tmpList.splice(id, 1)[0]
 		const formattedDate = currentDate.toLocaleString('en-US', options);
 
 		setCompletedList(() => {
@@ -178,7 +153,6 @@ function App() {
 				{ title: tmpTask.title, description: tmpTask.description, date: formattedDate },
 				...completedList
 			];
-			// localStorage.setItem('myDoneList', JSON.stringify(updatedList));
 			const options = {
 				body: { title: tmpTask.title, description: tmpTask.description, date: formattedDate }
 			}
@@ -187,7 +161,6 @@ function App() {
 		});
 
 		setTaskList(tmpList);
-		// localStorage.setItem('myToDoList', JSON.stringify(tmpList));
 		const options2 = {
 			body: tmpTask
 		}
