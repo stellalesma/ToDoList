@@ -11,13 +11,59 @@ import { useState, useEffect } from 'react';
 // ameliorer le design, surtout pour la partie add
 // faire la persistance en creant mon propre fichier JSON
 
-
 function App() {
 	const [taskList, setTaskList] = useState([])
 	const [taskToEdit, setTaskToEdit] = useState([])
 	const [completedList, setCompletedList] = useState([])
 	const [isModalVisible, setModalVisible] = useState(false)
 	const [isCompletedList, setIsCompletedList] = useState(false)
+
+	const customFetch = async (url, options = {}) => {
+		const defaultMethod = "GET"
+		const defaultHeaders = {
+			"Content-Type": "application/json",
+			Accept: "application/json",
+		}
+
+		options.method = options.method || defaultMethod
+		options.headers = options.headers ?
+			{
+				...defaultHeaders,
+				...options.headers
+			} :
+			defaultHeaders
+
+		options.body = JSON.stringify(options.body) || false
+		if (!options.body) delete options.body
+
+		try {
+			const response = await fetch(url, options);
+			if (response.ok) {
+				return await response.json();
+			} else {
+				console.error("Fetch error:", response.statusText);
+				throw new Error("Network response was not ok");
+			}
+		} catch (err) {
+			console.error("Fetch error:", err.message);
+			return err;
+		}
+	}
+
+    const post = (url, options) => {
+      options.method = "POST"
+      return customFetch(url, options)
+    }
+  
+    const put = (url, options) => {
+      options.method = "PUT"
+      return customFetch(url, options)
+    }
+  
+    const del = (url, options) => {
+      options.method = "DELETE"
+      return customFetch(url, options)
+    }
 
 	// useEffect(() => {
 	// 	const taskToDoStored = localStorage.getItem('myToDoList');
@@ -46,7 +92,12 @@ function App() {
 				{title: newTask.title, description: newTask.description},
 				...taskList
 			];
-			localStorage.setItem('myToDoList', JSON.stringify(updatedList));
+			// localStorage.setItem('myToDoList', JSON.stringify(updatedList));
+			const options = {
+				body: newTask
+			}
+			console.log(newTask)
+			post("http://localhost:5000/mytodolist", options);
 			return updatedList;
 		});
 
@@ -69,7 +120,11 @@ function App() {
 		setTaskList(tmpList);
 		setTaskToEdit([]);
 		setModalVisible(false);
-		localStorage.setItem('myToDoList', JSON.stringify(tmpList));
+		// localStorage.setItem('myToDoList', JSON.stringify(tmpList));
+		const options = {
+			body: editedTask
+		}
+		put("http://localhost:5000/mytodolist", options);
 	};
 
 
@@ -81,16 +136,24 @@ function App() {
 
 	const handleDeleteTask = (id) => {
 		const tmpList = taskList.slice();
-		tmpList.splice(id, 1);
+		const deletedTask = tmpList.splice(id, 1);
 		setTaskList(tmpList);
-		localStorage.setItem('myToDoList', JSON.stringify(tmpList));
+		// localStorage.setItem('myToDoList', JSON.stringify(tmpList));
+		const options = {
+			body: deletedTask[0]
+		}
+		del("http://localhost:5000/mytodolist", options);
 	};
 
 	const handleDeleteCompletedTask = (id) => {
 		const tmpList = completedList.slice();
-		tmpList.splice(id, 1);
+		const deletedTask = tmpList.splice(id, 1);
 		setCompletedList(tmpList);
-		localStorage.setItem('myDoneList', JSON.stringify(tmpList));
+		// localStorage.setItem('myDoneList', JSON.stringify(tmpList));
+		const options = {
+			body: deletedTask[0]
+		}
+		del("http://localhost:5000/mydonelist", options);
 	};
 
 	const handleDoneTask = (id) => {
@@ -100,37 +163,57 @@ function App() {
 			year: 'numeric',
 			month: 'long',
 			day: 'numeric',
-			hour: 'numeric', 
-			minute: 'numeric', 
+			hour: 'numeric',
+			minute: 'numeric',
 			second: 'numeric',
 		};
 
 		const currentDate = new Date();
 		const tmpList = taskList.slice()
-		const tmpTask = tmpList.splice(id, 1) // return an array and each element in tmpList is also an array
+		const tmpTask = tmpList.splice(id, 1)[0] // return an array and each element in tmpList is also an array
 		const formattedDate = currentDate.toLocaleString('en-US', options);
 
 		setCompletedList(() => {
 			const updatedList = [
-				{title: tmpTask[0].title, description: tmpTask[0].description, date: formattedDate},
+				{ title: tmpTask.title, description: tmpTask.description, date: formattedDate },
 				...completedList
 			];
-			localStorage.setItem('myDoneList', JSON.stringify(updatedList));
+			// localStorage.setItem('myDoneList', JSON.stringify(updatedList));
+			const options = {
+				body: { title: tmpTask.title, description: tmpTask.description, date: formattedDate }
+			}
+			post("http://localhost:5000/mydonelist", options);
 			return updatedList;
 		});
 
 		setTaskList(tmpList);
-		localStorage.setItem('myToDoList', JSON.stringify(tmpList));
+		// localStorage.setItem('myToDoList', JSON.stringify(tmpList));
+		const options2 = {
+			body: tmpTask
+		}
+		del("http://localhost:5000/mytodolist", options2);
 	}
 
 	useEffect(() => {
-		const taskToDoStored = JSON.parse(localStorage.getItem('myToDoList'));
-		const taskDoneStored = JSON.parse(localStorage.getItem('myDoneList'));
+		const get = (url, options = {}) => customFetch(url, options)
 
-		if (taskToDoStored)
-			setTaskList(taskToDoStored);
-		if (taskDoneStored)
-			setCompletedList(taskDoneStored);
+		Promise.all([get("http://localhost:5000/mytodolist"), get("http://localhost:5000/mydonelist")])
+			.then(([parse1, parse2]) => {
+				console.log("Données à parser1 :", parse1[0].title);
+				console.log("Données à parser2 :", parse2);
+
+
+				const taskToDoStored = parse1;
+				const taskDoneStored = parse2;
+
+				if (taskToDoStored)
+					setTaskList(taskToDoStored);
+				if (taskDoneStored)
+					setCompletedList(taskDoneStored);
+			})
+			.catch(error => {
+				console.error("Erreur lors de la récupération des données :", error);
+			});
 	}, []);
 
 
