@@ -38,7 +38,7 @@ Instructions :
 
 7. Bonus (facultatif) :
 
-    - Ajoutez la possibilité de modifier le texte d'une tâche.                                                           
+    - Ajoutez la possibilité de modifier le texte d'une tâche.                                                           ok
     - Implémentez la fonctionnalité de filtre pour afficher uniquement les tâches complétées ou non complétées.          ok
 
 Ressources utiles :
