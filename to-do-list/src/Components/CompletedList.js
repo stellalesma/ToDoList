@@ -19,7 +19,17 @@ function CompletedList({ completedList, onDelete }) {
 
     return (
         <>
-            <ul>{displayTask}</ul>
+            {
+                completedList.length !== 0 ? 
+                (
+                    <ul>{displayTask}</ul>
+                ) : (
+                    <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
+                        <img src='../public/no_task.jpg' alt='no task' />
+                        <p style={{ color: 'white', marginTop: '20px', marginBottom: '20px' }}>No Task</p>
+                    </div>
+                )
+            }
         </>
     );
 }

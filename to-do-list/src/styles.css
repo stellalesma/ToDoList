@@ -169,6 +169,9 @@ ul {
 img {
     width: 100px;
     height: 100px;
+    margin-top: 10px;
+    font-size: 10;
+    color: #f5538670;
 }
 
 /*CompletedList.css*/
