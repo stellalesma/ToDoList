@@ -5,7 +5,7 @@ import TaskList from './Components/TaskList';
 import EditWindow from './Components/EditWindow';
 import CompletedList from './Components/CompletedList';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 
 // lorsque la page est vide, afficher une image
 // ameliorer le design, surtout pour la partie add
@@ -41,6 +41,7 @@ function App() {
 			if (response.ok) {
 				return await response.json();
 			} else {
+				console.log(response)
 				console.error("Fetch error:", response.statusText);
 				throw new Error("Network response was not ok");
 			}
@@ -50,37 +51,34 @@ function App() {
 		}
 	}
 
-    const post = (url, options) => {
+    const post = useCallback((url, options) => {
       options.method = "POST"
       return customFetch(url, options)
-    }
+    }, [])
   
-    const put = (url, options) => {
-      options.method = "PUT"
+    const patch = (url, options) => {
+      options.method = "PATCH"
       return customFetch(url, options)
     }
   
-    const del = (url, options) => {
+    const del = (url, options = {}) => {
       options.method = "DELETE"
       return customFetch(url, options)
     }
 
-	const handleAddTask = (newTask) => {
-		setTaskList(() => {
-			const updatedList = [
-				{title: newTask.title, description: newTask.description},
-				...taskList
-			];
-			const options = {
-				body: newTask
+	const handleAddTask = useCallback((newTask) => {
+		const options = {
+			body: {
+				title: newTask.title,
+				description: newTask.description,
+				completed: false,
 			}
-			console.log(newTask)
-			post("http://localhost:5000/mytodolist", options);
-			return updatedList;
-		});
-
+		}
+		post("http://localhost:5000/mytodolist", options);
+		
+		setTaskList([newTask, ...taskList]);
 		setIsCompletedList(false);
-	};
+	}, [taskList, post]);
 
 	const handleDisplay = (bool) => {
 		setIsCompletedList(bool);
@@ -89,21 +87,27 @@ function App() {
 	const handleEditTask = (id) => {
 		const tmp = taskList.slice(id)[0];
 		setModalVisible(true);
-		setTaskToEdit({title: tmp.title, description: tmp.description, id: id});
+		console.log(tmp)
+		console.log(tmp.id)
+		setTaskToEdit({title: tmp.title, description: tmp.description, id: tmp.id, index: id});
 	};
 
 	const handleSaveEditedTask = (editedTask) => {
 		const tmpList = taskList.slice();
-		tmpList[taskToEdit.id] = editedTask;
+		tmpList[taskToEdit.index] = editedTask;
+		
+		const options = {
+			body: {
+				title: editedTask.title,
+				description: editedTask.description,
+			}
+		}
+		console.log(`id = ${taskToEdit.id}`)
+		patch(`http://localhost:5000/mytodolist/${taskToEdit.id}`, options);
 		setTaskList(tmpList);
 		setTaskToEdit([]);
 		setModalVisible(false);
-		const options = {
-			body: editedTask
-		}
-		put("http://localhost:5000/mytodolist", options);
 	};
-
 
 	const handleCancelEditedTask = (e) => {
 		e.preventDefault();
@@ -113,22 +117,18 @@ function App() {
 
 	const handleDeleteTask = (id) => {
 		const tmpList = taskList.slice();
-		const deletedTask = tmpList.splice(id, 1);
+		const deletedTask = tmpList.splice(id, 1)[0];
+		
+		del(`http://localhost:5000/mytodolist/${deletedTask.id}`);
 		setTaskList(tmpList);
-		const options = {
-			body: deletedTask[0]
-		}
-		del("http://localhost:5000/mytodolist", options);
 	};
 
 	const handleDeleteCompletedTask = (id) => {
 		const tmpList = completedList.slice();
-		const deletedTask = tmpList.splice(id, 1);
+		const deletedTask = tmpList.splice(id, 1)[0];
+
+		del(`http://localhost:5000/mytodolist/${deletedTask.id}`);
 		setCompletedList(tmpList);
-		const options = {
-			body: deletedTask[0]
-		}
-		del("http://localhost:5000/mydonelist", options);
 	};
 
 	const handleDoneTask = (id) => {
@@ -148,47 +148,48 @@ function App() {
 		const tmpTask = tmpList.splice(id, 1)[0]
 		const formattedDate = currentDate.toLocaleString('en-US', options);
 
+		const optionsPatch = {
+			body: {
+				date: formattedDate,
+				completed: true,
+			}
+		}
+		
+		patch(`http://localhost:5000/mytodolist/${tmpTask.id}`, optionsPatch);
+
 		setCompletedList(() => {
 			const updatedList = [
 				{ title: tmpTask.title, description: tmpTask.description, date: formattedDate },
 				...completedList
 			];
-			const options = {
-				body: { title: tmpTask.title, description: tmpTask.description, date: formattedDate }
-			}
-			post("http://localhost:5000/mydonelist", options);
 			return updatedList;
 		});
-
 		setTaskList(tmpList);
-		const options2 = {
-			body: tmpTask
-		}
-		del("http://localhost:5000/mytodolist", options2);
 	}
 
 	useEffect(() => {
 		const get = (url, options = {}) => customFetch(url, options)
 
-		Promise.all([get("http://localhost:5000/mytodolist"), get("http://localhost:5000/mydonelist")])
-			.then(([parse1, parse2]) => {
-				console.log("Données à parser1 :", parse1[0].title);
-				console.log("Données à parser2 :", parse2);
+		Promise.all([get("http://localhost:5000/mytodolist")])
+			.then(([taskStored]) => {
 
+				const taskToDoStored = []
+				const taskDoneStored = []
 
-				const taskToDoStored = parse1;
-				const taskDoneStored = parse2;
+				if (Array.isArray(taskStored)) {
+					for (const task of taskStored) {
+						if (task.completed) taskDoneStored.push(task)
+						else taskToDoStored.push(task)
+					}
+				}
 
-				if (taskToDoStored)
-					setTaskList(taskToDoStored);
-				if (taskDoneStored)
-					setCompletedList(taskDoneStored);
+				setTaskList(taskToDoStored.sort((a, b) => b.id - a.id));
+				setCompletedList(taskDoneStored.sort((a, b) => new Date(b.date) - new Date(a.date)));
 			})
 			.catch(error => {
-				console.error("Erreur lors de la récupération des données :", error);
+				console.error("Error while recovering data :", error);
 			});
-	}, []);
-
+	}, [handleAddTask]);
 
 	return (
 		<>

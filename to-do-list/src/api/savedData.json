@@ -1,70 +1,32 @@
 {
   "mytodolist": [
     {
-      "title": "njkkn",
-      "description": "njjkjnkm",
-      "id": 1
+      "title": "lolo",
+      "description": "lolo",
+      "completed": true,
+      "id": 1,
+      "date": "Thursday, December 21, 2023 at 9:21:00 AM"
     },
     {
-      "title": "lololo",
-      "description": "poiioopp",
-      "id": 2
+      "title": "bobo",
+      "description": "bebe a bobo",
+      "completed": true,
+      "id": 2,
+      "date": "Thursday, December 21, 2023 at 9:20:17 AM"
     },
     {
-      "title": "llllllllllllllllllllllll",
-      "description": "ooooooooooooooooooooooooooooo",
-      "id": 3
+      "title": "coco",
+      "description": "coco",
+      "completed": true,
+      "id": 3,
+      "date": "Thursday, December 21, 2023 at 9:19:50 AM"
     },
     {
-      "title": "wcw",
-      "description": "efwaa",
-      "id": 4
-    },
-    {
-      "title": "gh",
-      "description": "hjjhh",
-      "id": 5
-    },
-    {
-      "title": "6h34",
-      "description": "hy5ju",
-      "id": 6
-    }
-  ],
-  "mydonelist": [
-    {
-      "title": "lololo",
-      "description": "poiioopp",
-      "id": 1
-    },
-    {
-      "title": "lololo",
-      "description": "poiioopp",
-      "id": 2
-    },
-    {
-      "title": "wcw",
-      "description": "efwaa",
-      "date": "Thursday, December 14, 2023 at 12:22:05 PM",
-      "id": 3
-    },
-    {
-      "title": "wcw",
-      "description": "efwaa",
-      "date": "Thursday, December 14, 2023 at 12:22:05 PM",
-      "id": 4
-    },
-    {
-      "title": "kkkkkkkkkkkkkkkkkkkkkkkkkkkkkk",
-      "description": "ooooooooooooooooooooooooooooo",
-      "date": "Thursday, December 14, 2023 at 1:40:29 PM",
-      "id": 5
-    },
-    {
-      "title": "kkkkkkkkkkkkkkkkkkkkkkkkkkkkkk",
-      "description": "ooooooooooooooooooooooooooooo",
-      "date": "Thursday, December 14, 2023 at 1:40:29 PM",
-      "id": 6
+      "title": "aoao",
+      "description": "aoao",
+      "completed": true,
+      "id": 4,
+      "date": "Thursday, December 21, 2023 at 9:21:38 AM"
     }
   ]
 }

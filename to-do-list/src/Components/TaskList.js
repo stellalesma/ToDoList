@@ -21,7 +21,17 @@ function TaskList({ taskList, onEdit, onDelete, onDone }) {
 
     return (
         <>
-            <ul>{displayTask}</ul>
+            {
+                taskList.length !== 0 ? 
+                (
+                    <ul>{displayTask}</ul>
+                ) : (
+                    <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
+                        <img src='../public/no_task.jpg' alt='no task' style={{ marginTop: '10px' }} />
+                        <p style={{ color: 'white', marginTop: '20px', marginBottom: '20px' }}>No Task</p>
+                    </div>
+                )
+            }
         </>
     );
 }

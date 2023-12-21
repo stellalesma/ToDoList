@@ -14,6 +14,11 @@ function AddTask({ onAddTask }) {
         setDescription(e.target.value);
     };
 
+    const handleCancel = () => {
+        setTitle("");
+        setDescription("");
+    };
+
     const handleSubmit = (e) => {
         e.preventDefault();
 
@@ -39,9 +44,12 @@ function AddTask({ onAddTask }) {
                     <label className='addTask' htmlFor="description">Description :</label>
                     <textarea type="text" id="description" name="description" placeholder="Please, set a description for your Description..." value={description} onChange={handleDescription} className='addTask defaultText'></textarea>
                     { (title.trim() && !description.trim()) ? <p className='warning'>* The description is empty. Please, fill it out before adding...</p> : null }
-                </div>
 
-                <button className={ (title.trim() && description.trim()) ? 'addTask enable' : 'addTask disable'} type='submit'>Add</button>
+                    <div style={{display: 'flex', justifyContent: 'center'}}>
+                        <button className={ (title.trim() && description.trim()) ? 'addTask enable' : 'addTask disable'} type='submit'>Add</button>
+                        <button className='addTask enable' style={{marginLeft: '50px'}} onClick={handleCancel}>Cancel</button>
+                    </div>
+                </div>
 
         </form>
     );

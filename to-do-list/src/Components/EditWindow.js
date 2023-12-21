@@ -24,7 +24,7 @@ function EditWindow({ currentTitle, currentDescription, onSaveEdit, onCancelEdit
             setNewDescription('');
         }
     };
-    
+
     return (
         <div>
             <div className="overlay" />
